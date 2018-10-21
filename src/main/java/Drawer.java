@@ -2,7 +2,7 @@
 import java.util.List;
 
 class Drawer {
-    public void showTree(SuffixTreeImplementation tree) {
+    void showTree(SuffixTreeImplementation tree) {
         if (tree.getNodes().isEmpty()) {
             System.out.println("The tree is bold :c");
             return;

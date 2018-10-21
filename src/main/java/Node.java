@@ -4,17 +4,17 @@ import java.util.List;
 import java.util.Objects;
 
 class Node {
-    String edge;             // a substring of the input string belonging to the node
+    private String edge;             // a substring of the input string belonging to the node
     private List<Integer> children;  // list of child nodes
     private int number; //node`s number
 
-    public Node() { //a node itself
+    Node() { //a node itself
         this.children = new ArrayList<>();
         this.edge = "";
         this.number = 0;
     }
 
-    int getNumber() {
+    private int getNumber() {
         return number;
     }
 

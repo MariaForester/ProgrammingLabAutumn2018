@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/SuffixTree.iml" filepath="$PROJECT_DIR$/.idea/SuffixTree.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jjjj.iml" filepath="$PROJECT_DIR$/.idea/modules/jjjj.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jjjj_main.iml" filepath="$PROJECT_DIR$/.idea/modules/jjjj_main.iml" group="jjjj" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jjjj_test.iml" filepath="$PROJECT_DIR$/.idea/modules/jjjj_test.iml" group="jjjj" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/newClone.iml" filepath="$PROJECT_DIR$/.idea/modules/newClone.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/newClone_main.iml" filepath="$PROJECT_DIR$/.idea/modules/newClone_main.iml" group="jjjj" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/newClone_test.iml" filepath="$PROJECT_DIR$/.idea/modules/newClone_test.iml" group="jjjj" />
     </modules>
   </component>
 </project>
