@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -55,23 +54,21 @@ class Node {
     }
 
     public String toString() {
-        return "This node is node n." + this.getNumber() + "and this node`s edge is" + this.getEdge();
+        return "This node is a node n." + this.getNumber() + "and this node`s edge is" + this.getEdge();
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || o.getClass() != getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (!(o instanceof Node)) return false;
         Node node = (Node) o;
-        return Objects.equals(edge, node.edge) && Objects.equals(children, node.children);
+        return getNumber() == node.getNumber() &&
+                Objects.equals(getEdge(), node.getEdge()) &&
+                Objects.equals(getChildren(), node.getChildren());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(edge, children);
+        return Objects.hash(getEdge(), getChildren(), getNumber());
     }
 }

@@ -1,10 +1,13 @@
-
 import java.util.*;
 
 class SuffixTreeImplementation {
     private List<Node> nodes = new ArrayList<>(); //list of nodes of the tree
 
     SuffixTreeImplementation(String inputString) {
+        String pattern = "(.)*\\$";
+           if (!inputString.matches(pattern)) {
+            throw new IllegalArgumentException("incorrect");
+           }
         nodes.add(new Node()); //add a root
         for (int i = 0; i < inputString.length(); ++i) {
             addSuffix(inputString.substring(i)); // add every suffix of the string given
