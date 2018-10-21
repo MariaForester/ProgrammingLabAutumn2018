@@ -1,22 +1,49 @@
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 class Node {
-    String edge;             // a substring of the input string
-    List<Integer> children;  // list of child nodes
+    String edge;             // a substring of the input string belonging to the node
+    private List<Integer> children;  // list of child nodes
+    private int number; //node`s number
 
-    public Node() {
+    public Node() { //a node itself
         this.children = new ArrayList<>();
         this.edge = "";
+        this.number = 0;
+    }
+
+    int getNumber() {
+        return number;
+    }
+
+    void setNumber(int numberToEstablish) {
+        this.number = numberToEstablish;
     }
 
     String getEdge() {
         return edge;
     }
 
+    void setEdge(String edgeToEstablish) {
+        this.edge = edgeToEstablish;
+    }
+
     List<Integer> getChildren() {
         return children;
+    }
+
+    void addChild(Integer childToInsert) {
+        this.children.add(childToInsert);
+    }
+
+    void addChild(Integer positionForInsertion, Integer childToInsert) {
+        this.children.set(positionForInsertion, childToInsert);
+    }
+
+    void addCMultipleChildren(List<Integer> childrenToInsert) {
+        this.children.addAll(childrenToInsert);
     }
 
     boolean hasChild(Integer childNumber) {
@@ -27,20 +54,8 @@ class Node {
         return this.children.containsAll(childrenNumbers);
     }
 
-    void addChild(Integer newChildNumber) {
-        this.children.add(newChildNumber);
-    }
-
-    void addChild(Integer positionForInsertion, Integer newChildNumber) {
-        this.children.set(positionForInsertion, newChildNumber);
-    }
-
-    void addCMultipleChildren(List<Integer> newChildrenNumbers) {
-        this.children.addAll(newChildrenNumbers);
-    }
-
     public String toString() {
-        return "This node`s edge is" + this.getEdge();
+        return "This node is node n." + this.getNumber() + "and this node`s edge is" + this.getEdge();
     }
 
     @Override
