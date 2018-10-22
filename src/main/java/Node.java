@@ -13,7 +13,7 @@ class Node {
         this.number = 0;
     }
 
-    private int getNumber() {
+    int getNumber() {
         return number;
     }
 
@@ -46,11 +46,11 @@ class Node {
     }
 
     boolean hasChild(Integer childNumber) {
-        return this.children.contains(childNumber);
+        return this.getChildren().contains(childNumber);
     }
 
     boolean hasChildren(List<Integer> childrenNumbers) {
-        return this.children.containsAll(childrenNumbers);
+        return this.getChildren().containsAll(childrenNumbers);
     }
 
     public String toString() {

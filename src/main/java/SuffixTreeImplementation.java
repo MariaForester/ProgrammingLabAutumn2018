@@ -5,10 +5,10 @@ class SuffixTreeImplementation {
 
     SuffixTreeImplementation(String inputString) {
         String pattern = "(.)*\\$";
-           if (!inputString.matches(pattern)) {
-            throw new IllegalArgumentException("incorrect");
-           }
-        nodes.add(new Node()); //add a root
+        if (!inputString.matches(pattern)) {
+            throw new IllegalArgumentException("The entered string is not supported by the tree. Please, put in the string of 'example$' pattern");
+        }
+        nodes.add(new Node());
         for (int i = 0; i < inputString.length(); ++i) {
             addSuffix(inputString.substring(i)); // add every suffix of the string given
         }
@@ -32,6 +32,7 @@ class SuffixTreeImplementation {
                     newNodeNumber = nodes.size(); //giving an inserted node a number. which is the previous node`s number + 1
                     Node newNode = new Node(); // creating this node
                     newNode.setEdge(stringToAdd.substring(position)); //adding substring of a string, starting with index `position`
+                    newNode.setNumber(newNodeNumber);
                     nodes.add(newNode); //adding a node that has just been created to the tree`s list of nodes
                     childrenOfCurrentNode.add(newNodeNumber);//adding a new node number to the list of childrenOfCurrentNode of the current node
                     return;
@@ -51,6 +52,7 @@ class SuffixTreeImplementation {
                     Node nodeForPartInCommon = new Node(); // new node for the part in common
                     nodeForPartInCommon.setEdge(prefixOfSuffixRemained.substring(0, i));//inserting prefix of the prefix to the split node
                     nodeForPartInCommon.addChild(replaceNumber); //the number of the node added becomes what was the last before the split
+                    nodeForPartInCommon.setNumber(newNodeNumber);
                     nodes.add(nodeForPartInCommon);
                     nodes.get(replaceNumber).setEdge(prefixOfSuffixRemained.substring(i));  // old node loses the part in common
                     nodes.get(currentNodeNumber).addChild(positionInSuffix, newNodeNumber);//adding new nodes to the current root
