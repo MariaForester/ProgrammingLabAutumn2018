@@ -54,7 +54,7 @@ class Node {
     }
 
     public String toString() {
-        return "This node is a node n." + this.getNumber() + "and this node`s edge is" + this.getEdge();
+        return "This node is a node n." + this.getNumber() + " and this node`s edge is " + this.getEdge() + ".";
     }
 
     @Override
