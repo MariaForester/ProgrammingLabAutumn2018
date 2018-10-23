@@ -49,7 +49,7 @@ class SuffixTreeImplementation {
                 if (stringToAdd.charAt(position + i) != prefixOfSuffixRemained.charAt(i)) {// splitting Node with `newNodeNumber` number
                     int replaceNumber = newNodeNumber;  //switching nodes numbers: the last number goes to the prefix added
                     newNodeNumber = this.getNodes().size();
-                    Node nodeForPartInCommon = new Node(); // new node for the part in common
+                    Node nodeForPartInCommon = new Node(); //new node for the part in common
                     nodeForPartInCommon.setEdge(prefixOfSuffixRemained.substring(0, i));//inserting prefix of the prefix to the split node
                     nodeForPartInCommon.addChild(replaceNumber); //the number of the node added becomes what was the last before the split
                     nodeForPartInCommon.setNumber(newNodeNumber);
