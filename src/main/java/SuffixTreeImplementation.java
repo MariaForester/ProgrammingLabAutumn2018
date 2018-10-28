@@ -65,7 +65,7 @@ class SuffixTreeImplementation {
         }
     }
 
-    boolean doesItHaveSuchSuffix(String suffixToBeDetected) { // checking if the tree has such a suffix
+    boolean itHasSuchBranch(String suffixToBeDetected) { // checking if the tree has such a suffix
        for (Node node: this.getNodes()) {
            if (node.getEdge().equals(suffixToBeDetected)) {
                return true;
