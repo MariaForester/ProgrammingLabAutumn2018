@@ -5,20 +5,20 @@ import java.util.Objects;
 class Node {
     private String edge;             // a substring of the input string belonging to the node
     private List<Integer> children;  // list of child nodes
-    private int number; //node`s number
+    private int indices; //node`s indices
 
-    Node() { //a node itself
-        this.children = new ArrayList<>();
-        this.edge = "";
-        this.number = 0;
+    Node(String edge, List<Integer> children, int indices) { //a node itself
+        this.children = children;
+        this.edge = edge;
+        this.indices = indices;
     }
 
-    int getNumber() {
-        return number;
+    int getIndices() {
+        return indices;
     }
 
-    void setNumber(int numberToEstablish) {
-        this.number = numberToEstablish;
+    void setIndices(int numberToEstablish) {
+        this.indices = numberToEstablish;
     }
 
     String getEdge() {
@@ -54,7 +54,7 @@ class Node {
     }
 
     public String toString() {
-        return "This node is a node n." + this.getNumber() + " and this node`s edge is " + this.getEdge() + ".";
+        return "This node is a node n." + this.getIndices() + " and this node`s edge is " + this.getEdge() + ".";
     }
 
     @Override
@@ -62,13 +62,13 @@ class Node {
         if (this == o) return true;
         if (!(o instanceof Node)) return false;
         Node node = (Node) o;
-        return getNumber() == node.getNumber() &&
+        return getIndices() == node.getIndices() &&
                 Objects.equals(getEdge(), node.getEdge()) &&
                 Objects.equals(getChildren(), node.getChildren());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getEdge(), getChildren(), getNumber());
+        return Objects.hash(getEdge(), getChildren(), getIndices());
     }
 }

@@ -12,10 +12,10 @@ class Drawer {
     private void draw(int node, String prefix, SuffixTreeImplementation tree) {
         List<Integer> children = tree.getNodes().get(node).getChildren();
         if (children.isEmpty()) {
-            System.out.println("- " + tree.getNodes().get(node).getEdge());
+            System.out.println("- " + tree.getNode(node).getEdge());
             return;
         }
-        System.out.println("┐ " + tree.getNodes().get(node).getEdge());
+        System.out.println("┐ " + tree.getNode(node).getEdge());
         for (int i = 0; i < children.size() - 1; i++) {
             Integer child = children.get(i);
             System.out.print(prefix + "├─");

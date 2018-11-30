@@ -18,15 +18,4 @@ public class TreeTest {
     public void amountOfNodes() {
         assertTrue(tree.getNodes().size() == 12);
     }
-
-    @Test
-    public void exceptionTest() {
-        boolean thrown = false;
-        try {
-            new SuffixTreeImplementation("Forester");
-        } catch (IllegalArgumentException ex) {
-            thrown = true;
-        }
-        assertTrue(thrown);
-    }
 }
