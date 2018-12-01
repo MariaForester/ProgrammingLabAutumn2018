@@ -2,10 +2,6 @@ import java.util.List;
 
 class Drawer {
     void showTree(SuffixTreeImplementation tree) {
-        if (tree.getNodes().size() == 2) {
-            System.out.println("The tree is bold :c");
-            return;
-        }
         draw(0, "", tree);
     }
 
