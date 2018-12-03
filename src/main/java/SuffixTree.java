@@ -5,8 +5,9 @@ class SuffixTree {
 
     SuffixTree(String inputString) {
         nodes.add(new Node("", new ArrayList<>(), 0));
-        for (int i = 0; i < inputString.length(); ++i) {
-            addSuffix(inputString.substring(i)); // add every suffix of the string given
+        String inputStringModified = inputString + "$";
+        for (int i = 0; i < inputStringModified.length(); ++i) {
+            addSuffix(inputStringModified.substring(i)); // add every suffix of the string given
         }
     }
 
@@ -27,9 +28,9 @@ class SuffixTree {
             char currentSymbol = stringToAdd.charAt(position); //getting symbol by its index that we will be now considered
             List<Integer> childrenOfCurrentNode = this.getNode(currentNodeIndices).getChildren();//getting list of children of the current node
             int positionInSuffix = 0;
-            int newNodeIndices = 0;
+            int newNodeIndices;
             while (true) {
-                createNodeForSubstring(positionInSuffix, newNodeIndices, position, childrenOfCurrentNode, stringToAdd);
+                createNodeForSubstring(positionInSuffix, position, childrenOfCurrentNode, stringToAdd);
                 newNodeIndices = childrenOfCurrentNode.get(positionInSuffix); //position in the suffix is greater than the list size of childrenOfCurrentNode
                 // of the current node;
                 if (this.getNode(newNodeIndices).getEdge().charAt(0) == currentSymbol) {
@@ -64,11 +65,11 @@ class SuffixTree {
         }
     }
 
-    private void createNodeForSubstring(int positionInSuffix, int newNodeIndices, int position,
+    private void createNodeForSubstring(int positionInSuffix, int position,
                                         List<Integer> childrenOfCurrentNode, String stringToAdd) {
         if (positionInSuffix == childrenOfCurrentNode.size()) { // if there are no matching child, remainder of stringToAdd becomes new node
             // the symbol under `position` is the last symbol of this node`s edge)
-            newNodeIndices = this.getNodes().size(); //giving an inserted node indices
+            int newNodeIndices = this.getNodes().size(); //giving an inserted node indices
             Node newNode = new Node(stringToAdd.substring(position), new ArrayList<>(), newNodeIndices); // creating this node,  edge: adding substring of a string, starting with index `position`
             this.getNodes().add(newNode); //adding a node that has just been created to the tree`s list of nodes
             childrenOfCurrentNode.add(newNodeIndices);//adding a new node number to the list of childrenOfCurrentNode of the current node
@@ -87,9 +88,8 @@ class SuffixTree {
     private String count = "";
 
     boolean search(String target, List<Integer> currentChildren) {
-        StringBuilder builder = new StringBuilder();
-        deepSearch(target, currentChildren);
-        if (count.equals(target)) {
+        deepSearch(target + "$", currentChildren);
+        if (count.equals(target + "$")) {
             count = "";
             return true;
         }

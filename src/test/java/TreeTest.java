@@ -8,7 +8,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class TreeTest {
-    private SuffixTree tree = new SuffixTree("Forester$");
+    private SuffixTree tree = new SuffixTree("Forester");
 
     @Test
     public void hasBranch() {
@@ -31,13 +31,13 @@ public class TreeTest {
             children.add(f.getIndices());
         }
 
-        assertTrue(tree.search("ter$", children));
-        assertTrue(tree.search("r$", children));
-        assertTrue(tree.search("$", children));
-        assertTrue(tree.search("Forester$", children));
-        assertTrue(tree.search("rester$", children));
-        assertFalse(tree.search("F$", children));
-        assertFalse(tree.search("Fores$", children));
+        assertTrue(tree.search("ter", children));
+        assertTrue(tree.search("r", children));
+        assertTrue(tree.search("er", children));
+        assertTrue(tree.search("Forester", children));
+        assertTrue(tree.search("rester", children));
+        assertFalse(tree.search("F", children));
+        assertFalse(tree.search("Fores", children));
         assertFalse(tree.search("j", children));
     }
 
