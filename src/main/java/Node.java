@@ -13,7 +13,7 @@ class Node {
         this.indices = indices;
     }
 
-    private int getIndices() {
+    int getIndices() {
         return indices;
     }
 
