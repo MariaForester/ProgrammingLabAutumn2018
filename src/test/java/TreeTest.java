@@ -40,5 +40,4 @@ public class TreeTest {
         assertFalse(tree.search("Fores", children));
         assertFalse(tree.search("j", children));
     }
-
 }
