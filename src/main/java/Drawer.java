@@ -2,6 +2,10 @@ import java.util.List;
 
 class Drawer {
     void showTree(SuffixTree tree) {
+        if (tree.getNodes().size() == 2) {
+            System.out.println("The input string was empty. There is nothing to show");
+            return;
+        }
         draw(0, "", tree);
     }
 

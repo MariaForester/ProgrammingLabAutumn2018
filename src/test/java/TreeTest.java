@@ -25,19 +25,13 @@ public class TreeTest {
 
     @Test
     public void lookupForSuffix() {
-
-        List<Integer> children = new ArrayList<>();
-        for (Node f : tree.getNodes()) {
-            children.add(f.getIndices());
-        }
-
-        assertTrue(tree.search("ter", children));
-        assertTrue(tree.search("r", children));
-        assertTrue(tree.search("er", children));
-        assertTrue(tree.search("Forester", children));
-        assertTrue(tree.search("rester", children));
-        assertFalse(tree.search("F", children));
-        assertFalse(tree.search("Fores", children));
-        assertFalse(tree.search("j", children));
+        assertTrue(tree.search("ter"));
+        assertTrue(tree.search("r"));
+        assertTrue(tree.search("er"));
+        assertTrue(tree.search("Forester"));
+        assertTrue(tree.search("rester"));
+        assertFalse(tree.search("F"));
+        assertFalse(tree.search("Fores"));
+        assertFalse(tree.search("j"));
     }
 }

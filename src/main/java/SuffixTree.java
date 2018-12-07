@@ -38,16 +38,18 @@ class SuffixTree {
                 }
                 positionInSuffix++;//move on to the next symbol in the considered suffix
             }
-            String prefixOfSuffixRemained = this.getNode(newNodeIndices).getEdge(); // finding prefix of remaining suffix in common with child
-            split(prefixOfSuffixRemained, stringToAdd, position, newNodeIndices, currentNodeIndices, positionInSuffix);
+            Node newNode = this.getNode(newNodeIndices);
+            split(newNode, stringToAdd, position, currentNodeIndices, positionInSuffix);
             position += counter;  // advancing past part in common
             currentNodeIndices = newNodeIndices;  // continue down the tree
             counter = 0;
         }
     }
 
-    private void split(String prefixOfSuffixRemained, String stringToAdd, int position, int newNodeIndices,
+    private void split(Node newNode, String stringToAdd, int position,
                        int currentNodeIndices, int positionInSuffix) {
+        String prefixOfSuffixRemained = newNode.getEdge(); // finding prefix of remaining suffix in common with child
+        int newNodeIndices = newNode.getIndices();
         while (counter < prefixOfSuffixRemained.length()) {
             if (stringToAdd.charAt(position + counter) != prefixOfSuffixRemained.charAt(counter)) {// splitting Node with `newNodeIndices` number
                 int replaceNumber = newNodeIndices;  //switching nodes numbers: the last number goes to the prefix added
@@ -87,8 +89,8 @@ class SuffixTree {
 
     private String count = "";
 
-    boolean search(String target, List<Integer> currentChildren) {
-        deepSearch(target + "$", currentChildren);
+    boolean search(String target) {
+        deepSearch(target + "$", this.getNode(0).getChildren());
         if (count.equals(target + "$")) {
             count = "";
             return true;
@@ -110,9 +112,8 @@ class SuffixTree {
                 }
                 if (count.length() >= prefix.length() && count.substring(count.length()
                         - prefix.length()).equals(prefix) && count.length() < target.length()) {
-                    List<Integer> youngerChildren = this.getNode(child).getChildren();
                     String remainder = target.substring(count.length());
-                    deepSearch(remainder, youngerChildren);
+                    deepSearch(remainder, this.getNode(child).getChildren());
 
                 }
                 List<Integer> listForLeafSearch = this.getNode(child).getChildren();
