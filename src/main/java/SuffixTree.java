@@ -22,26 +22,26 @@ class SuffixTree {
     private int counter = 0; //initializing a count for prefixes
 
     private void addSuffix(String stringToAdd) {
-        int currentNodeIndices = 0; //indices of the current node. when 0 - root node
+        int currentNodeIndex = 0; //indices of the current node. when 0 - root node
         int position = 0; //index of symbol in the suffix string
         while (position < stringToAdd.length()) { //adding each symbol
             char currentSymbol = stringToAdd.charAt(position); //getting symbol by its index that we will be now considered
-            List<Integer> childrenOfCurrentNode = this.getNode(currentNodeIndices).getChildren();//getting list of children of the current node
+            List<Integer> childrenOfCurrentNode = this.getNode(currentNodeIndex).getChildren();//getting list of children of the current node
             int positionInSuffix = 0;
-            int newNodeIndices;
+            int newNodeIndex;
             while (true) {
                 createNodeForSubstring(positionInSuffix, position, childrenOfCurrentNode, stringToAdd);
-                newNodeIndices = childrenOfCurrentNode.get(positionInSuffix); //position in the suffix is greater than the list size of childrenOfCurrentNode
+                newNodeIndex = childrenOfCurrentNode.get(positionInSuffix); //position in the suffix is greater than the list size of childrenOfCurrentNode
                 // of the current node;
-                if (this.getNode(newNodeIndices).getEdge().charAt(0) == currentSymbol) {
+                if (this.getNode(newNodeIndex).getEdge().charAt(0) == currentSymbol) {
                     break; // we have already inserted the last symbol into the tree. break the loop
                 }
                 positionInSuffix++;//move on to the next symbol in the considered suffix
             }
-            Node newNode = this.getNode(newNodeIndices);
-            split(newNode, stringToAdd, position, currentNodeIndices, positionInSuffix);
+            Node newNode = this.getNode(newNodeIndex);
+            split(newNode, stringToAdd, position, currentNodeIndex, positionInSuffix);
             position += counter;  // advancing past part in common
-            currentNodeIndices = newNodeIndices;  // continue down the tree
+            currentNodeIndex = newNodeIndex;  // continue down the tree
             counter = 0;
         }
     }
@@ -49,18 +49,18 @@ class SuffixTree {
     private void split(Node newNode, String stringToAdd, int position,
                        int currentNodeIndices, int positionInSuffix) {
         String prefixOfSuffixRemained = newNode.getEdge(); // finding prefix of remaining suffix in common with child
-        int newNodeIndices = newNode.getIndices();
+        int newNodeIndex = newNode.getIndices();
         while (counter < prefixOfSuffixRemained.length()) {
-            if (stringToAdd.charAt(position + counter) != prefixOfSuffixRemained.charAt(counter)) {// splitting Node with `newNodeIndices` number
-                int replaceNumber = newNodeIndices;  //switching nodes numbers: the last number goes to the prefix added
-                newNodeIndices = this.getNodes().size();
+            if (stringToAdd.charAt(position + counter) != prefixOfSuffixRemained.charAt(counter)) {// splitting Node with `newNodeIndex` number
+                int replaceNumber = newNodeIndex;  //switching nodes numbers: the last number goes to the prefix added
+                newNodeIndex = this.getNodes().size();
                 Node nodeForPartInCommon = new Node("", new ArrayList<>(), 0); //new node for the part in common
                 nodeForPartInCommon.setEdge(prefixOfSuffixRemained.substring(0, counter));//inserting prefix of the prefix to the split node
                 nodeForPartInCommon.addChild(replaceNumber); //the number of the node added becomes what was the last before the split
-                nodeForPartInCommon.setIndices(newNodeIndices);
+                nodeForPartInCommon.setIndices(newNodeIndex);
                 this.getNodes().add(nodeForPartInCommon);
                 this.getNodes().get(replaceNumber).setEdge(prefixOfSuffixRemained.substring(counter));  // old node loses the part in common
-                this.getNodes().get(currentNodeIndices).addChild(positionInSuffix, newNodeIndices);//adding new nodes to the current root
+                this.getNodes().get(currentNodeIndices).addChild(positionInSuffix, newNodeIndex);//adding new nodes to the current root
                 break;  // continue down the tree
             }
             counter++;
@@ -71,10 +71,10 @@ class SuffixTree {
                                         List<Integer> childrenOfCurrentNode, String stringToAdd) {
         if (positionInSuffix == childrenOfCurrentNode.size()) { // if there are no matching child, remainder of stringToAdd becomes new node
             // the symbol under `position` is the last symbol of this node`s edge)
-            int newNodeIndices = this.getNodes().size(); //giving an inserted node indices
-            Node newNode = new Node(stringToAdd.substring(position), new ArrayList<>(), newNodeIndices); // creating this node,  edge: adding substring of a string, starting with index `position`
+            int newNodeIndex = this.getNodes().size(); //giving an inserted node indices
+            Node newNode = new Node(stringToAdd.substring(position), new ArrayList<>(), newNodeIndex); // creating this node,  edge: adding substring of a string, starting with index `position`
             this.getNodes().add(newNode); //adding a node that has just been created to the tree`s list of nodes
-            childrenOfCurrentNode.add(newNodeIndices);//adding a new node number to the list of childrenOfCurrentNode of the current node
+            childrenOfCurrentNode.add(newNodeIndex);//adding a new node number to the list of childrenOfCurrentNode of the current node
         }
     }
 
@@ -89,9 +89,9 @@ class SuffixTree {
 
     private String count = "";
 
-    boolean search(String target) {
-        deepSearch(target + "$", this.getNode(0).getChildren());
-        if (count.equals(target + "$")) {
+    boolean containsSubstring(String substring) {
+        deepSearch(substring + "$", this.getNode(0).getChildren());
+        if (count.equals(substring + "$")) {
             count = "";
             return true;
         }
@@ -99,20 +99,20 @@ class SuffixTree {
         return false;
     }
 
-    private void deepSearch(String target, List<Integer> currentChildren) {
+    private void deepSearch(String substring, List<Integer> currentChildren) {
         List<String> prefixes = new ArrayList<>();
-        for (int i = 1; i < target.length() + 1; i++) {
-            prefixes.add(target.substring(0, i));
+        for (int i = 1; i < substring.length() + 1; i++) {
+            prefixes.add(substring.substring(0, i));
         }
         for (String prefix : prefixes) {
             for (Integer child : currentChildren) {
                 if (this.getNode(child).getEdge().equals(prefix)) {
                     count += this.getNode(child).getEdge();
-                    if (count.equals(target)) return;
+                    if (count.equals(substring)) return;
                 }
                 if (count.length() >= prefix.length() && count.substring(count.length()
-                        - prefix.length()).equals(prefix) && count.length() < target.length()) {
-                    String remainder = target.substring(count.length());
+                        - prefix.length()).equals(prefix) && count.length() < substring.length()) {
+                    String remainder = substring.substring(count.length());
                     deepSearch(remainder, this.getNode(child).getChildren());
 
                 }
@@ -120,8 +120,8 @@ class SuffixTree {
                 for (int node: listForLeafSearch) {
                     if (this.getNode(node).getChildren().size() != 0 && count.length() >= prefix.length()
                             && count.substring(count.length()
-                            - prefix.length()).equals(prefix) && count.length() < target.length()) {
-                        deepSearch(target.substring(count.length()), this.getNode(node).getChildren());
+                            - prefix.length()).equals(prefix) && count.length() < substring.length()) {
+                        deepSearch(substring.substring(count.length()), this.getNode(node).getChildren());
                     }
                 }
                 if (this.getNode(child).getEdge().equals(prefix)) {
@@ -131,7 +131,6 @@ class SuffixTree {
         }
     }
 }
-
 
 
 

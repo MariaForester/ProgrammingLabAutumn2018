@@ -1,8 +1,5 @@
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -25,13 +22,13 @@ public class TreeTest {
 
     @Test
     public void lookupForSuffix() {
-        assertTrue(tree.search("ter"));
-        assertTrue(tree.search("r"));
-        assertTrue(tree.search("er"));
-        assertTrue(tree.search("Forester"));
-        assertTrue(tree.search("rester"));
-        assertFalse(tree.search("F"));
-        assertFalse(tree.search("Fores"));
-        assertFalse(tree.search("j"));
+        assertTrue(tree.containsSubstring("ter"));
+        assertTrue(tree.containsSubstring("r"));
+        assertTrue(tree.containsSubstring("er"));
+        assertTrue(tree.containsSubstring("Forester"));
+        assertTrue(tree.containsSubstring("rester"));
+        assertFalse(tree.containsSubstring("F"));
+        assertFalse(tree.containsSubstring("Fores"));
+        assertFalse(tree.containsSubstring("j"));
     }
 }
