@@ -1,10 +1,9 @@
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class TreeTest {
+public class TreeBlackCaseTest {
     private SuffixTree firstTree = new SuffixTree("Forester");
     private SuffixTree secondTree = new SuffixTree("");
     private SuffixTree thirdTree = new SuffixTree("aaaaa");
@@ -15,24 +14,6 @@ public class TreeTest {
             " without appending a unique character to the end; you just have to make sure that at the end," +
             " after the final iteration, you put non-branching inner nodes to the end of every implicit suffix (" +
             "i.e. every suffix that ends in the middle of an edge).");
-
-    @Test
-    public void hasBranch() {
-        assertTrue(firstTree.itHasSuchBranch("ster$"));
-        assertTrue(firstTree.itHasSuchBranch("Forester$"));
-        assertFalse(firstTree.itHasSuchBranch("blahblahblah"));
-        assertFalse(firstTree.itHasSuchBranch("Forester"));
-
-        assertFalse(secondTree.itHasSuchBranch("a"));
-        assertFalse(secondTree.itHasSuchBranch("Forester"));
-    }
-
-    @Test
-    public void amountOfNodes() {
-        assertEquals(firstTree.getNodes().size(), 12);
-
-        assertEquals(secondTree.getNodes().size(), 2);
-    }
 
     @Test
     public void lookupForSuffix() {
@@ -152,6 +133,6 @@ public class TreeTest {
                 " in the middle of an edge)."));
         assertFalse(fifthTree.containsSubstring("edgggfgfghgedge"));
         assertFalse(fifthTree.containsSubstring("fdfdhfihdkjhkjgr"));
+        assertFalse(fifthTree.containsSubstring("wihout"));
     }
-
 }
