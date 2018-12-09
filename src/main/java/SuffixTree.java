@@ -2,9 +2,11 @@ import java.util.*;
 
 class SuffixTree {
     private List<Node> nodes = new ArrayList<>(); //list of nodes of the tree
+    private String treeName = "";
 
     SuffixTree(String inputString) {
         nodes.add(new Node("", new ArrayList<>(), 0));
+        treeName = inputString;
         String inputStringModified = inputString + "$";
         for (int i = 0; i < inputStringModified.length(); ++i) {
             addSuffix(inputStringModified.substring(i)); // add every suffix of the string given
@@ -90,6 +92,9 @@ class SuffixTree {
     private String checkupValue = "";
 
     boolean containsSuffix(String suffix) {
+        if (suffix.length() > this.treeName.length()) {
+            return false;
+        }
         deepSearchSuffix(suffix, this.getNode(0).getChildren());
         if (checkupValue.equals(suffix)) {
             checkupValue = "";
@@ -137,6 +142,9 @@ class SuffixTree {
     private int count = 0;
 
     boolean containsSubstring(String substring) {
+        if (substring.length() > this.treeName.length()) {
+            return false;
+        }
         deepSearchSubstring(substring, this.getNode(0).getChildren());
         if (count == substring.length()) {
             count = 0;
@@ -159,7 +167,7 @@ class SuffixTree {
             } else {
                 if (currentEdge.equals(substring.substring(0, currentEdge.length()))) {
                     count += currentEdge.length();
-                    deepSearchSubstring(substring.substring(count), this.getNode(node).getChildren());
+                    deepSearchSubstring(substring.substring(currentEdge.length()), this.getNode(node).getChildren());
                 } else {
                     deepSearchSubstring(substring, this.getNode(node).getChildren());
                 }
