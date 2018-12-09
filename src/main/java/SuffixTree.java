@@ -23,9 +23,9 @@ class SuffixTree {
 
     private void addSuffix(String stringToAdd) {
         int currentNodeIndex = 0; //indices of the current node. when 0 - root node
-        int position = 0; //index of symbol in the suffix string
+        int position = 0; //count of symbol in the suffix string
         while (position < stringToAdd.length()) { //adding each symbol
-            char currentSymbol = stringToAdd.charAt(position); //getting symbol by its index that we will be now considered
+            char currentSymbol = stringToAdd.charAt(position); //getting symbol by its count that we will be now considered
             List<Integer> childrenOfCurrentNode = this.getNode(currentNodeIndex).getChildren();//getting list of children of the current node
             int positionInSuffix = 0;
             int newNodeIndex;
@@ -72,7 +72,7 @@ class SuffixTree {
         if (positionInSuffix == childrenOfCurrentNode.size()) { // if there are no matching child, remainder of stringToAdd becomes new node
             // the symbol under `position` is the last symbol of this node`s edge)
             int newNodeIndex = this.getNodes().size(); //giving an inserted node indices
-            Node newNode = new Node(stringToAdd.substring(position), new ArrayList<>(), newNodeIndex); // creating this node,  edge: adding substring of a string, starting with index `position`
+            Node newNode = new Node(stringToAdd.substring(position), new ArrayList<>(), newNodeIndex); // creating this node,  edge: adding substring of a string, starting with count `position`
             this.getNodes().add(newNode); //adding a node that has just been created to the tree`s list of nodes
             childrenOfCurrentNode.add(newNodeIndex);//adding a new node number to the list of childrenOfCurrentNode of the current node
         }
@@ -87,41 +87,44 @@ class SuffixTree {
         return false;
     }
 
-    private String count = "";
+    private String checkupValue = "";
 
-    boolean containsSubstring(String substring) {
-        deepSearch(substring + "$", this.getNode(0).getChildren());
-        if (count.equals(substring + "$")) {
-            count = "";
+    boolean containsSuffix(String suffix) {
+        deepSearchSuffix(suffix, this.getNode(0).getChildren());
+        if (checkupValue.equals(suffix)) {
+            checkupValue = "";
             return true;
         }
-        count = "";
+        checkupValue = "";
         return false;
     }
 
-    private void deepSearch(String substring, List<Integer> currentChildren) {
+    private void deepSearchSuffix(String suffix, List<Integer> currentChildren) {
         List<String> prefixes = new ArrayList<>();
-        for (int i = 1; i < substring.length() + 1; i++) {
-            prefixes.add(substring.substring(0, i));
+        for (int i = 1; i < suffix.length() + 1; i++) {
+            prefixes.add(suffix.substring(0, i));
         }
         for (String prefix : prefixes) {
             for (Integer child : currentChildren) {
-                if (this.getNode(child).getEdge().equals(prefix)) {
-                    count += this.getNode(child).getEdge();
-                    if (count.equals(substring)) return;
+                String currentEdge = this.getNode(child).getEdge();
+                if (currentEdge.substring(currentEdge.length() - 1).equals("$")) {
+                    currentEdge = currentEdge.substring(0, currentEdge.length() - 1);
                 }
-                if (count.length() >= prefix.length() && count.substring(count.length()
-                        - prefix.length()).equals(prefix) && count.length() < substring.length()) {
-                    String remainder = substring.substring(count.length());
-                    deepSearch(remainder, this.getNode(child).getChildren());
+                if (currentEdge.equals(prefix)) {
+                    checkupValue += currentEdge;
+                    if (checkupValue.equals(suffix)) return;
+                }
+                if (checkupValue.length() >= prefix.length() && checkupValue.substring(checkupValue.length()
+                        - prefix.length()).equals(prefix) && checkupValue.length() < suffix.length()) {
+                    String remainder = suffix.substring(checkupValue.length());
+                    deepSearchSuffix(remainder, this.getNode(child).getChildren());
 
                 }
-                List<Integer> listForLeafSearch = this.getNode(child).getChildren();
-                for (int node: listForLeafSearch) {
-                    if (this.getNode(node).getChildren().size() != 0 && count.length() >= prefix.length()
-                            && count.substring(count.length()
-                            - prefix.length()).equals(prefix) && count.length() < substring.length()) {
-                        deepSearch(substring.substring(count.length()), this.getNode(node).getChildren());
+                for (int node : this.getNode(child).getChildren()) {
+                    if (this.getNode(node).getChildren().size() != 0 && checkupValue.length() >= prefix.length()
+                            && checkupValue.substring(checkupValue.length()
+                            - prefix.length()).equals(prefix) && checkupValue.length() < suffix.length()) {
+                        deepSearchSuffix(suffix.substring(checkupValue.length()), this.getNode(node).getChildren());
                     }
                 }
                 if (this.getNode(child).getEdge().equals(prefix)) {
@@ -130,7 +133,42 @@ class SuffixTree {
             }
         }
     }
+
+    private int count = 0;
+
+    boolean containsSubstring(String substring) {
+        deepSearchSubstring(substring, this.getNode(0).getChildren());
+        if (count == substring.length()) {
+            count = 0;
+            return true;
+        }
+        count = 0;
+        return false;
+    }
+
+    private void deepSearchSubstring(String substring, List<Integer> currentChildren) {
+        for (Integer node : currentChildren) {
+            String currentEdge = this.getNode(node).getEdge();
+            if (currentEdge.length() >= substring.length()) {
+                if (currentEdge.substring(0, substring.length()).equals(substring)) {
+                    count += substring.length();
+                    return;
+                } else {
+                    deepSearchSubstring(substring, this.getNode(node).getChildren());
+                }
+            } else {
+                if (currentEdge.equals(substring.substring(0, currentEdge.length()))) {
+                    count += currentEdge.length();
+                    deepSearchSubstring(substring.substring(count), this.getNode(node).getChildren());
+                } else {
+                    deepSearchSubstring(substring, this.getNode(node).getChildren());
+                }
+            }
+        }
+    }
+
 }
+
 
 
 
