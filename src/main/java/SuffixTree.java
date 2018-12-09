@@ -140,12 +140,13 @@ class SuffixTree {
     }
 
     private int count = 0;
+    private int i = 0;
 
     boolean containsSubstring(String substring) {
         if (substring.length() > this.treeName.length()) {
             return false;
         }
-        deepSearchSubstring(substring, this.getNode(0).getChildren());
+        deepSearchSubstring(substring, this.getNode(0).getChildren(), substring);
         if (count == substring.length()) {
             count = 0;
             return true;
@@ -154,7 +155,7 @@ class SuffixTree {
         return false;
     }
 
-    private void deepSearchSubstring(String substring, List<Integer> currentChildren) {
+    private void deepSearchSubstring(String substring, List<Integer> currentChildren, String initialInput) {
         for (Integer node : currentChildren) {
             String currentEdge = this.getNode(node).getEdge();
             if (currentEdge.length() >= substring.length()) {
@@ -162,20 +163,24 @@ class SuffixTree {
                     count += substring.length();
                     return;
                 } else {
-                    deepSearchSubstring(substring, this.getNode(node).getChildren());
+                    deepSearchSubstring(substring, this.getNode(node).getChildren(), initialInput);
                 }
             } else {
                 if (currentEdge.equals(substring.substring(0, currentEdge.length()))) {
                     count += currentEdge.length();
-                    deepSearchSubstring(substring.substring(currentEdge.length()), this.getNode(node).getChildren());
+                    deepSearchSubstring(substring.substring(currentEdge.length()), this.getNode(node).getChildren(), initialInput);
                 } else {
-                    deepSearchSubstring(substring, this.getNode(node).getChildren());
+                    deepSearchSubstring(substring, this.getNode(node).getChildren(), initialInput);
                 }
+            }
+            if (count == initialInput.length()) {
+                return;
             }
         }
     }
-
 }
+
+
 
 
 
