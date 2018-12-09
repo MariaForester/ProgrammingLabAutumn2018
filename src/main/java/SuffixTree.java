@@ -104,13 +104,13 @@ class SuffixTree {
         return false;
     }
 
-    private void deepSearchSuffix(String suffix, List<Integer> currentChildren) {
+    private void deepSearchSuffix(String suffix, List<Integer> currentChildrenIndices) {
         List<String> prefixes = new ArrayList<>();
         for (int i = 1; i < suffix.length() + 1; i++) {
             prefixes.add(suffix.substring(0, i));
         }
         for (String prefix : prefixes) {
-            for (Integer child : currentChildren) {
+            for (Integer child : currentChildrenIndices) {
                 String currentEdge = this.getNode(child).getEdge();
                 if (currentEdge.substring(currentEdge.length() - 1).equals("$")) {
                     currentEdge = currentEdge.substring(0, currentEdge.length() - 1);
@@ -133,7 +133,7 @@ class SuffixTree {
                     }
                 }
                 if (this.getNode(child).getEdge().equals(prefix)) {
-                    currentChildren = this.getNode(child).getChildren();
+                    currentChildrenIndices = this.getNode(child).getChildren();
                 }
             }
         }
@@ -155,8 +155,8 @@ class SuffixTree {
         return false;
     }
 
-    private void deepSearchSubstring(String substring, List<Integer> currentChildren, String initialInput) {
-        for (Integer node : currentChildren) {
+    private void deepSearchSubstring(String substring, List<Integer> currentChildrenIndices, String initialInput) {
+        for (Integer node : currentChildrenIndices) {
             String currentEdge = this.getNode(node).getEdge();
             if (currentEdge.length() >= substring.length()) {
                 if (currentEdge.substring(0, substring.length()).equals(substring)) {
