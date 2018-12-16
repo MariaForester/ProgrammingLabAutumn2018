@@ -51,7 +51,7 @@ class SuffixTree {
     private void split(Node newNode, String stringToAdd, int position,
                        int currentNodeIndices, int positionInSuffix) {
         String prefixOfSuffixRemained = newNode.getEdge(); // finding prefix of remaining suffix in common with child
-        int newNodeIndex = newNode.getIndices();
+        int newNodeIndex = newNode.getIndex();
         while (counter < prefixOfSuffixRemained.length()) {
             if (stringToAdd.charAt(position + counter) != prefixOfSuffixRemained.charAt(counter)) {// splitting Node with `newNodeIndex` number
                 int replaceNumber = newNodeIndex;  //switching nodes numbers: the last number goes to the prefix added
@@ -59,7 +59,7 @@ class SuffixTree {
                 Node nodeForPartInCommon = new Node("", new ArrayList<>(), 0); //new node for the part in common
                 nodeForPartInCommon.setEdge(prefixOfSuffixRemained.substring(0, counter));//inserting prefix of the prefix to the split node
                 nodeForPartInCommon.addChild(replaceNumber); //the number of the node added becomes what was the last before the split
-                nodeForPartInCommon.setIndices(newNodeIndex);
+                nodeForPartInCommon.setIndex(newNodeIndex);
                 this.getNodes().add(nodeForPartInCommon);
                 this.getNodes().get(replaceNumber).setEdge(prefixOfSuffixRemained.substring(counter));  // old node loses the part in common
                 this.getNodes().get(currentNodeIndices).addChild(positionInSuffix, newNodeIndex);//adding new nodes to the current root
